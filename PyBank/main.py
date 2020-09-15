@@ -2,37 +2,48 @@ import os
 import csv
 
 budget_path = "resources/budget_data.csv"
+totalmonths = 0
+totalnet = 0
+netchangelist = []
+greatestincrease = ["", 0]
+greatestdecrease = ["", 999999999]
 
 with open(budget_path, "r") as csvfile: 
     csv_reader = csv.reader(csvfile, delimiter=",")
+    next(csv_reader, None)
 
-print("Financial Analysis" )
-print("-------------------")
+    firstrow = next(csv_reader)
+    totalmonths += 1
+    totalnet = int(firstrow[1])
+    previousnet = totalnet
 
-# Total Number of Months --
-count_of_months = 0
-with open(budget_path) as file:
-    csv_reader_object = csv.reader(file)
-    if csv.Sniffer().has_header:
-        next(csv_reader_object)
-    
-    for row in csv_reader_object:
-        count_of_months += 1
+    for row in csv_reader:
+        totalmonths += 1
+        totalnet += int(row[1])
+        netchange = int(row[1]) - previousnet
+        previousnet = int(row[1])
+        netchangelist.append(netchange)
 
-totalmonths = count_of_months
-print("Total Months: " + str(totalmonths))
+        if netchange > greatestincrease[1]:
+            greatestincrease[0] = row[0]
+            greatestincrease[1] = netchange
+        
+        if netchange < greatestdecrease[1]:
+            greatestdecrease[0] = row[0]
+            greatestdecrease[1] = netchange
 
+monthlyaverage = sum(netchangelist) / len(netchangelist)
+
+output = (
+    f" Financial Analysis\n"
+  f"----------------------------\n"
+  f"Total Months: {totalmonths}\n"
+  f"Total: ${totalnet}\n"
+  f"Average  Change: ${monthlyaverage}\n"
+  f"Greatest Increase in Profits: {greatestincrease[0]} (${greatestincrease[1]})\n"
+  f"Greatest Decrease in Profits: {greatestdecrease[0]} (${greatestdecrease[1]})\n"
+)
+print(output)
 # Net Total Profit/Loss over Entire Period --
-with open(budget_path) as file:
-    if csv.Sniffer().has_header:
-        next(csv_reader_object)
 
-data = list(csv_reader)
-totals1 = [] 
-for row in data:
-     values = row[1] 
-     totals1.append(values)          
-     totals2 = [float(integral) for integral in totals1] #turns values in totals1 into floats
-     totals3 = sum(totals2) 
 
-print(totals3)
