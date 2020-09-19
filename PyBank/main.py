@@ -10,7 +10,7 @@ greatestdecrease = ["", 999999999]
 # Open File
 with open(budget_path, "r") as csvfile: 
     csv_reader = csv.reader(csvfile, delimiter=",")
-    next(csv_reader, None)
+    header = next(csv_reader)
 #Total Months
     firstrow = next(csv_reader)
     totalmonths += 1
@@ -40,7 +40,7 @@ output = (
   f"----------------------------\n"
   f"Total Months: {totalmonths}\n"
   f"Total: ${totalnet}\n"
-  f"Average  Change: ${monthlyaverage}\n"
+  f"Average  Change: ${round(monthlyaverage,2)}\n"
   f"Greatest Increase in Profits: {greatestincrease[0]} (${greatestincrease[1]})\n"
   f"Greatest Decrease in Profits: {greatestdecrease[0]} (${greatestdecrease[1]})\n"
 )
@@ -52,7 +52,7 @@ with open(bank_output, 'w') as txtfile:
     txtfile.write('Financial Analysis\n')
     txtfile.write("----------------------------\n")
     txtfile.write(f"Total Months: {totalmonths}\n")
-    txtfile.write()
-    txtfile.write()
-    txtfile.write()
-    txtfile.write()
+    txtfile.write(f"Total: ${totalnet}\n")
+    txtfile.write(f"Average  Change: ${round(monthlyaverage,2)}\n")
+    txtfile.write(f"Greatest Increase in Profits: {greatestincrease[0]} (${greatestincrease[1]})\n")
+    txtfile.write(f"Greatest Decrease in Profits: {greatestdecrease[0]} (${greatestdecrease[1]})\n")
