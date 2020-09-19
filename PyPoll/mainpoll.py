@@ -1,0 +1,61 @@
+import os
+import csv
+
+election_path = "resources/election_data.csv"
+totalvotes = 0
+votes = []
+candidates = []
+uniquecandidate = []
+vote_count = []
+percentage = []
+with open(election_path, "r") as csvfile:
+    csv_reader = csv.reader(csvfile, delimiter=",")
+    next(csv_reader)
+
+    firstrow = next(csv_reader)
+    for row in csv_reader:
+      totalvotes += 1
+
+      if row[2] not in uniquecandidate:
+        uniquecandidate.append(row[2])
+
+      votes.append(row[2])
+
+    for candidate in uniquecandidate:
+      vote_count.append(votes.count(candidate))
+      percentage.append(round(votes.count(candidate)/totalvotes*100,3))
+    
+    winner = uniquecandidate[vote_count.index(max(vote_count))]
+
+
+output = (
+    f"Election Results\n"
+  f"-------------------------\n"
+  f"Total Votes: {totalvotes}\n"
+  f"-------------------------\n"
+)
+
+print(output)
+
+for i in range(len(uniquecandidate)):
+  print(f'{uniquecandidate[i]}: {percentage[i]}% ({vote_count[i]})')
+
+output2 = ( 
+  f"-------------------------\n"
+  f"Winner: {winner}\n"
+  f"-------------------------\n"
+)
+print(output2)
+
+# poll_output = 'analysis/poll_output.txt
+# #textfile
+# with open(poll_output,'w') as txtfile:
+#   txtfile.write('Election Results')
+#   txtfile.write('-------------------------\n')
+#   txtfile.write(f'Total Votes: {totalvotes}\n')
+#   txtfile.write('-------------------------\n')
+#   for i in range (len(uniqueCandidates)):
+#             txtfile.write(f'\n{uniqueCandidates[i]}: {percent[i]}% {vote_count[i]}')
+#   txtfile.write('-------------------------\n')
+#   txtfile.write(f'Winner: {winner}')
+#         txtfile.write('------------------------------------\n')
