@@ -47,7 +47,7 @@ output2 = (
   f"-------------------------\n"
 )
 print(output2)
-#creating output file oath
+#creating output file ath
 poll_output = 'analysis/poll_output.txt'
 
 #printing output to txt file
