@@ -32,9 +32,9 @@ with open(budget_path, "r") as csvfile:
         if netchange < greatestdecrease[1]:
             greatestdecrease[0] = row[0]
             greatestdecrease[1] = netchange
-
+#calculating monthly avergage
 monthlyaverage = sum(netchangelist) / len(netchangelist)
-
+#Formatting my output
 output = (
     f" Financial Analysis\n"
   f"----------------------------\n"
@@ -45,9 +45,10 @@ output = (
   f"Greatest Decrease in Profits: {greatestdecrease[0]} (${greatestdecrease[1]})\n"
 )
 print(output)
-
+#creating output file path
 bank_output = "analysis/bank_output.txt"
 
+#Printing output to txt file
 with open(bank_output, 'w') as txtfile:
     txtfile.write('Financial Analysis\n')
     txtfile.write("----------------------------\n")
